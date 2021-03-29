@@ -1,3 +1,4 @@
+import { Episode, Character, DataResponse } from './../interfaces/data.interface';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular'
 import { BehaviorSubject } from 'rxjs';
@@ -12,16 +13,11 @@ const QUERY= gql`
    }
   characters {
     results {
+      id
       name
       status
       species
       gender
-      origin {
-        name
-      }
-      location{
-        name
-      }
       image
     }
   }
@@ -32,10 +28,10 @@ const QUERY= gql`
   providedIn: 'root'
 })
 export class DataService {
-private episodesSubject = new BehaviorSubject<any[]>(null);
+private episodesSubject = new BehaviorSubject<Episode[]>(null);
 episodes$ = this.episodesSubject.asObservable();
 
-private charactersSubject = new BehaviorSubject<any[]>(null);
+private charactersSubject = new BehaviorSubject<Character[]>(null);
 characters$ = this.charactersSubject.asObservable();
 
   constructor(private apollo:Apollo) {
@@ -43,7 +39,7 @@ characters$ = this.charactersSubject.asObservable();
    }
 
   private getDataAPI(){
-    this.apollo.watchQuery<any>({
+    this.apollo.watchQuery<DataResponse>({
       query: QUERY
     }).valueChanges.pipe(
       take(1),
