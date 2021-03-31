@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { CharactesCardComponent } from './characters/charactes-card/charactes-card.component';
+// import { CharactesCardComponent } from './characters/charactes-card/charactes-card.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, CharactesCardComponent],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     HomeRoutingModule

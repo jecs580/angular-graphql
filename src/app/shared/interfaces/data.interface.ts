@@ -15,7 +15,7 @@ export interface Character {
     id:number;
     name:string;
     status:string;
-    spacies:string;
+    species:string;
     gender:string;
     image:string;
     isFavorite?:boolean;

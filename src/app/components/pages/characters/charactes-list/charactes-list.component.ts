@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-charactes-list',
-  templateUrl: './charactes-list.component.html',
+  template: `
+  <section class="character__list">
+    <app-charactes-card *ngFor="let character of characters$ |async" [character]=character></app-charactes-card>
+  </section>
+  `,
   styleUrls: ['./charactes-list.component.scss']
 })
 export class CharactesListComponent implements OnInit {
