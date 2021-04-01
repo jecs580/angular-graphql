@@ -11,10 +11,14 @@ export class CharactesCardComponent  {
 
   constructor() { }
   @Input() character: Character;
-  getIcon(isFavorite:boolean):string{
-    return isFavorite? 'heart-solid.svg':'heart.svg'
+
+  getIcon():string{
+    return this.character.isFavorite? 'heart-solid.svg':'heart.svg'
   }
   toggleFavorite(){
+    const isFavorite = this.character.isFavorite;
+    this.getIcon();
+    this.character.isFavorite =!isFavorite;
 
   }
 }
