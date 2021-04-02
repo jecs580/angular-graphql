@@ -1,3 +1,4 @@
+import { LocalStorageService } from '@app/shared/services/localStorage.service';
 import { Episode, Character, DataResponse } from './../interfaces/data.interface';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular'
@@ -34,7 +35,7 @@ episodes$ = this.episodesSubject.asObservable();
 private charactersSubject = new BehaviorSubject<Character[]>(null);
 characters$ = this.charactersSubject.asObservable();
 
-  constructor(private apollo:Apollo) {
+  constructor(private apollo:Apollo, private localStorageService:LocalStorageService) {
     this.getDataAPI();
    }
 
@@ -46,8 +47,16 @@ characters$ = this.charactersSubject.asObservable();
       tap(({data}) =>{
         const {characters, episodes} = data;
         this.episodesSubject.next(episodes.results);
-        this.charactersSubject.next(characters.results);
+        this.parseCharacterData(characters.results);
       })
     ).subscribe();
+  }
+  private parseCharacterData(characters:Character[]){
+     const currentsFav = this.localStorageService.getFavoriteCharacters();
+    const newData =  characters.map(character=>{
+      const found = !!currentsFav.find((fav:Character)=>fav.id === character.id);
+      return {...character, isFavorite:found}
+    });
+    this.charactersSubject.next(newData);
   }
 }
