@@ -7,10 +7,12 @@ import { LocalStorageService } from '@app/shared/services/localStorage.service';
   template: `
   <section class="character__list">
     <app-charactes-card *ngFor="let character of characters$ |async" [character]=character></app-charactes-card>
+    <button class="button">⏫</button>
   </section>
   `,
   styleUrls: ['./charactes-list.component.scss']
 })
+// 🔼⏫⬆
 export class CharactesListComponent implements OnInit {
   public characters$= this.dataService.characters$;
   constructor(private dataService:DataService, private localStorageService:LocalStorageService) { }
