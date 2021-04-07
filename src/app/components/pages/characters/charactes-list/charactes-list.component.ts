@@ -6,7 +6,10 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-charactes-list',
   template: `
-  <section class="character__list">
+  <section class="character__list"
+    infiniteScroll
+    (scrolled)="onScrollDown()"
+  >
     <app-charactes-card *ngFor="let character of characters$ |async" [character]=character></app-charactes-card>
     <button class="button" (click)="onScrollTop()" *ngIf="showButton">⏫</button>
   </section>
@@ -18,6 +21,7 @@ export class CharactesListComponent implements OnInit {
   public characters$= this.dataService.characters$;
   showButton =false;
   private scrollHeight=500;
+  private pageNum= 1;
   constructor(
     @Inject(DOCUMENT) private document:Document,
     private dataService:DataService) { }
@@ -33,5 +37,11 @@ export class CharactesListComponent implements OnInit {
   }
   onScrollTop(){
     this.document.documentElement.scrollTop=0;
+  }
+  onScrollDown(){
+    this.pageNum +=1;
+    this.dataService.getCharactersByPage(this.pageNum);
+    console.log('Down!!');
+    
   }
 }
