@@ -1,3 +1,5 @@
+import { SnipperInterceptor } from './shared/interceptors/spinner.interceptor';
+import { SnipperModule } from './shared/components/snipper/snipper.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,8 +10,7 @@ import { HeaderModule } from './shared/components/header/header.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,13 +19,16 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
     GraphQLModule,
     HttpClientModule,
-    HeaderModule
+    HeaderModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    SnipperModule
   ],
-  providers: [],
+  providers: [
+    { provide:HTTP_INTERCEPTORS, useClass: SnipperInterceptor, multi:true}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { SnipperService } from './../../services/spinner.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-snipper',
   templateUrl: './snipper.component.html',
   styleUrls: ['./snipper.component.scss']
 })
-export class SnipperComponent implements OnInit {
+export class SnipperComponent {
 
-  constructor() { }
-
+  constructor(private snipperService:SnipperService) { }
+  isLoading$ = this.snipperService.isLoading$;
   ngOnInit(): void {
   }
 

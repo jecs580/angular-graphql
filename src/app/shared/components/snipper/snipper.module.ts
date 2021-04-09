@@ -8,6 +8,9 @@ import { SnipperComponent } from './snipper.component';
   declarations: [SnipperComponent],
   imports: [
     CommonModule
+  ],
+  exports:[
+    SnipperComponent
   ]
 })
 export class SnipperModule { }
