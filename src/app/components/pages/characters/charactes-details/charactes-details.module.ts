@@ -1,3 +1,4 @@
+import { CharactesCardModule } from './../charactes-card/charactes-card.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +10,8 @@ import { CharactesDetailsComponent } from './charactes-details.component';
   declarations: [CharactesDetailsComponent],
   imports: [
     CommonModule,
-    CharactesDetailsRoutingModule
+    CharactesDetailsRoutingModule,
+    CharactesCardModule
   ]
 })
 export class CharactesDetailsModule { }

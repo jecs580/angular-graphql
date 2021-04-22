@@ -3,7 +3,7 @@ import { Episode, Character, DataResponse, ApiResponse } from './../interfaces/d
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular'
 import { BehaviorSubject } from 'rxjs';
-import { pluck, take, tap, withLatestFrom } from 'rxjs/operators'
+import { find, mergeMap, pluck, take, tap, withLatestFrom } from 'rxjs/operators'
 const QUERY= gql`
  {
    episodes {
@@ -29,16 +29,21 @@ const QUERY= gql`
   providedIn: 'root'
 })
 export class DataService {
-private episodesSubject = new BehaviorSubject<Episode[]>(null);
+private episodesSubject = new BehaviorSubject<Episode[]>([]);
 episodes$ = this.episodesSubject.asObservable();
 
-private charactersSubject = new BehaviorSubject<Character[]>(null);
+private charactersSubject = new BehaviorSubject<Character[]>([]);
 characters$ = this.charactersSubject.asObservable();
 
   constructor(private apollo:Apollo, private localStorageService:LocalStorageService) {
     this.getDataAPI();
    }
-  
+  getDetails(id:number){
+    return this.characters$.pipe(
+      mergeMap((characters:Character[])=>characters), // Recorre todos datos obtenidos y los devuelve
+      find((character:Character)=>character?.id===id) // Busqueda del que personaje especifico y lo devuelve
+    )
+  }
   getCharactersByPage(pageNum:number){
     const QUERY_BY_PAGE= gql`
     {
