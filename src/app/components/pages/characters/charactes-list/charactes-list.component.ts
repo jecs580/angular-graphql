@@ -6,6 +6,7 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-charactes-list',
   template: `
+  <app-search></app-search>
   <section class="character__list"
     infiniteScroll
     (scrolled)="onScrollDown()"

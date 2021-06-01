@@ -1,3 +1,4 @@
+import { SearchModule } from './../../../../shared/components/search/search.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharactesCardModule } from './../charactes-card/charactes-card.module';
@@ -13,7 +14,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CommonModule,
     CharactesListRoutingModule,
     CharactesCardModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    SearchModule
   ]
 })
 export class CharactesListModule { }
