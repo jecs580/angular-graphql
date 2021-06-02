@@ -74,6 +74,37 @@ characters$ = this.charactersSubject.asObservable();
    )
   }
 
+  filterData(valueSearch:string){
+    const QUERY_BY_NAME= gql`
+    query($name:String){
+       characters(filter:{name:$name}){
+         info{
+          count
+        }
+        results {
+          id
+          name
+          status
+          species
+          gender
+          image
+        }
+      }
+    }
+    `;
+    this.apollo.watchQuery<any>({
+      query:QUERY_BY_NAME,
+      variables:{
+        name:valueSearch
+      }
+    }).valueChanges
+    .pipe(
+      take(1),
+      pluck('data','characters'),
+      tap((apiResponse)=>this.parseCharacterData([...apiResponse.results]))
+    )
+    .subscribe()
+  }
   private getDataAPI(){
     this.apollo.watchQuery<DataResponse>({
       query: QUERY
