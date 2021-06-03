@@ -11,7 +11,16 @@ import { DOCUMENT } from '@angular/common';
     infiniteScroll
     (scrolled)="onScrollDown()"
   >
-    <app-charactes-card *ngFor="let character of characters$ |async" [character]=character></app-charactes-card>
+  <ng-container *ngIf="characters$ |async as characters; else showEmpty">
+    <app-charactes-card *ngFor="let character of characters" [character]=character></app-charactes-card>
+  </ng-container>
+  <ng-template #showEmpty>
+    <div>
+      <h1>No hay resultados</h1>
+      <img src="assets/imgs/404.jpeg" alt="404">
+    </div>
+  </ng-template>
+  
     <button class="button" (click)="onScrollTop()" *ngIf="showButton">⏫</button>
   </section>
   `,

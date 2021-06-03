@@ -2,8 +2,8 @@ import { LocalStorageService } from '@app/shared/services/localStorage.service';
 import { Episode, Character, DataResponse, ApiResponse } from './../interfaces/data.interface';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular'
-import { BehaviorSubject } from 'rxjs';
-import { find, mergeMap, pluck, take, tap, withLatestFrom } from 'rxjs/operators'
+import { BehaviorSubject, of } from 'rxjs';
+import { catchError, find, mergeMap, pluck, take, tap, withLatestFrom } from 'rxjs/operators'
 const QUERY= gql`
  {
    episodes {
@@ -64,14 +64,12 @@ characters$ = this.charactersSubject.asObservable();
    }).valueChanges.pipe(
     take(1),
     pluck('data','characters'), // Es como usar destructuring entrara a data y data tiene el objeto characters
-    withLatestFrom(this.characters$), // Devuelve un objeto uniendo el primer observable con this.characters$
+    // withLatestFrom(this.characters$), // Devuelve un objeto uniendo el primer observable con this.characters$
     tap(([apiResponse,characters])=>{
       // Obtiene los datos de los observables
       this.parseCharacterData([...characters, ...apiResponse.results])
-    })
-   ).subscribe(
-     data =>console.log(data)
-   )
+    }),
+   ).subscribe()
   }
 
   filterData(valueSearch:string){
@@ -101,7 +99,12 @@ characters$ = this.charactersSubject.asObservable();
     .pipe(
       take(1),
       pluck('data','characters'),
-      tap((apiResponse)=>this.parseCharacterData([...apiResponse.results]))
+      tap((apiResponse)=>this.parseCharacterData([...apiResponse.results])),
+      catchError(error=>{
+        console.log(error.message);
+        this.charactersSubject.next(null)
+        return of(error);      
+      })
     )
     .subscribe()
   }
@@ -114,7 +117,7 @@ characters$ = this.charactersSubject.asObservable();
         const {characters, episodes} = data;
         this.episodesSubject.next(episodes.results);
         this.parseCharacterData(characters.results);
-      })
+      }),
     ).subscribe();
   }
   private parseCharacterData(characters:Character[]){
