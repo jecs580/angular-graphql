@@ -108,7 +108,7 @@ characters$ = this.charactersSubject.asObservable();
     )
     .subscribe()
   }
-  private getDataAPI(){
+  getDataAPI(){
     this.apollo.watchQuery<DataResponse>({
       query: QUERY
     }).valueChanges.pipe(

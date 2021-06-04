@@ -2,11 +2,11 @@ section.search__container{
     display: flex;
     justify-content: space-between;
     height: auto;
-    width: 95%;
+    width: 94%;
     margin: 1rem auto;
     align-content: center;
     padding: 1rem;
-    background: rbg(250, 246, 246 /16%);
+    background: rgb(250 246 246 /16%);
     border-radius: 0.5rem;
 
 .search__name{
@@ -19,7 +19,7 @@ label{
 }
 input {
     width: 95%;
-    padding: 1rem 3.75rem;
+    padding: 1rem 0.75rem;
     font-size: 1.25rem;
     font-weight: 400;
     line-height: 1.5;
@@ -28,6 +28,16 @@ input {
     border-radius: .25rem;
     height: calc(2.25rem + 2px);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    &:focus{
+        outline: none;
+    }
+}
+button{
+    padding: 0.75rem;
+    border: 1px solid #cdd4da;
+    border-radius: .25rem;
+    height: calc(2.25rem + 2px);
+    margin: 1px 7px;
     &:focus{
         outline: none;
     }
