@@ -15,8 +15,8 @@ import { DOCUMENT } from '@angular/common';
     <app-charactes-card *ngFor="let character of characters" [character]=character></app-charactes-card>
   </ng-container>
   <ng-template #showEmpty>
-    <div>
-      <h1>No hay resultados</h1>
+    <div class="notResults">
+      <h1 class="title">No hay resultados</h1>
       <img src="assets/imgs/404.jpeg" alt="404">
     </div>
   </ng-template>

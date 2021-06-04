@@ -26,4 +26,14 @@ section.character__list{
         border: 1px solid white;
         font-size: 2rem; 
     }
+   
+}
+.notResults{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title{
+    font-size: 2rem;
+    color: white;
 }
